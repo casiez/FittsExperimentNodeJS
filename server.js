@@ -84,7 +84,7 @@ io.sockets.on('connection', function (socket) {
 
 function generateTrials() {
 	var d = [0.4, 0.8];
-	var w = [0.025];
+	var w = [0.07];
 	var o = [0, 180, 30, 210, 60, 240, 90, 270, 120, 300, 150, 330];
 	var trials = [];
 

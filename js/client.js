@@ -107,30 +107,35 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // register mouse event handlers
   canvas.onmousedown = function(e){
-    var x = e.offsetX;
-    var y = e.offsetY;
-    
-    if (isInside(x,y)) {
-      var ts = new Date().getTime();
 
-      results.push({d: currTarget.d,
-                    w: currTarget.w,
-                    o: currTarget.o,
-                    t: ts - last_ts,
-                    err: error});
-      last_ts = ts;
-      if (error > 0) total_err++;
-      nbTrialsDone++;
-      error = 0;
-      moveToNexttrial();
-    } else {
-      error++;
+    // Hack to fix problem with touch screen
+    if (e.isTrusted) {
+      console.log(e);
+      var x = e.offsetX;
+      var y = e.offsetY;
+      
+      if (isInside(x,y)) {
+        var ts = new Date().getTime();
+
+        results.push({d: currTarget.d,
+                      w: currTarget.w,
+                      o: currTarget.o,
+                      t: ts - last_ts,
+                      err: error});
+        last_ts = ts;
+        if (error > 0) total_err++;
+        nbTrialsDone++;
+        error = 0;
+        moveToNexttrial();
+      } else {
+        error++;
+      }
+      redraw();
     }
-    redraw();
   };
    
   canvas.onmouseup = function(e){
-    
+
   };
 
   canvas.onmousemove = function(e) {
