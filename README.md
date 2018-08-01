@@ -10,7 +10,7 @@ Fitts' experiment task written in Node.js
 ```
 CREATE TABLE `results` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
- `creationdate` datetime NOT NULL DEFAULT current_timestamp(),
+ `creationdate` timestamp NOT NULL DEFAULT current_timestamp(),
  `hash` varchar(50) DEFAULT NULL,
  `res` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL,
  PRIMARY KEY (`id`)

@@ -22,14 +22,15 @@ document.addEventListener("DOMContentLoaded", function() {
   var total_err = 0;
   var nbTrialsDone = 0;
 
-  loadjscssfile(window.location.origin + "/socket.io/socket.io.js", "js");
+  loadjscssfile(window.location + "socket.io/socket.io.js", "js");
   loadjscssfile("//wurfl.io/wurfl.js", "js"); // to get info on the client
   loadjscssfile("js/utils.js", "js");
 
   whenAvailable(["io"], function() {
     console.log("io and js files loaded");
     // Server communication
-    socket = io.connect(origin);
+    socket = io();
+    //socket = io("",{path: "/~casiez/fitts/socket.io"});
 
     // Get participant ID 
     socket.on('connected', function (data) {
