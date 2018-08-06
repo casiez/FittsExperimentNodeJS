@@ -3,9 +3,9 @@
  *
  */
 
-var express = require('express')
+var express = require('express');
+var app = express();
 var mysql = require('mysql');
-var fs = require('fs');
 const port = 3000
 
 var pool      =    mysql.createPool({
@@ -19,11 +19,10 @@ var pool      =    mysql.createPool({
     debug    :  false
 });
 
-var app = require('http').createServer(handler);
-var io = require('socket.io').listen(app);
+var server = require('http').Server(app);
+var io = require('socket.io')(server);
 
-app.listen(port);
-datelog('Server listening on port '+port+'.');
+app.use(express.static(__dirname + '/'));
 
 function addZ(n) {
     return n<10?'0'+n:''+n;
@@ -32,23 +31,6 @@ function addZ(n) {
 function datelog(string) {
     var date = new Date();
     console.log("[" + date.getFullYear() + "-" + addZ(date.getMonth()+1) + "-" + addZ(date.getDate()) + " " + addZ(date.getHours()) + ":" + addZ(date.getMinutes()) + "] " + string);
-}
-
-function handler (req, res) {
-    // console.log(__dirname);
-    // console.log(req.url);
-    var url = req.url;
-    if (url == '/') { url = '/index.html'; }
-    fs.readFile(__dirname + url,
-
-    function (err, data) {
-        if (err) {
-            res.writeHead(500);
-            return res.end('Error loading URL '+url);
-        }
-        res.writeHead(200);
-        res.end(data);
-    });
 }
 
 var clients = {};
@@ -60,7 +42,7 @@ function displayListOfCurrentClients() {
     }
 }
 
-io.sockets.on('connection', function (socket) {
+io.on('connection', function (socket) {
     datelog("New client connection");
 
     socket.emit('connected', socket.id);
@@ -99,6 +81,9 @@ function generateTrials() {
 	//console.log(trials);
 	return JSON.stringify(trials);
 }
+
+server.listen(port);
+datelog('Server listening on port '+port+'.');
 
 function saveResults(data) {
 	var query = "INSERT INTO results (hash, res) VALUES ('" + data.id + "', '" + JSON.stringify(data) + "')";
