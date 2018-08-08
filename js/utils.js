@@ -16,17 +16,23 @@ function setCookie(dico, exdays) {
 gvar.setCookie = setCookie;
 
 function getCookie(cname) {
-    var decodedCookie = decodeURIComponent(document.cookie);
-    // console.log("GetCookie "+cname);
-    // console.log(decodedCookie);
-    var ca = decodedCookie.split(';');
+    var decodedCookie = null;
+    try {
+        decodedCookie = decodeURIComponent(document.cookie);
+        // console.log("GetCookie "+cname);
+        // console.log(decodedCookie);
+        var ca = decodedCookie.split(';');
 
-    for(var k = 0; k < ca.length; k++) {
-        var data = ca[k].split('=');
-        if (data[0].trim() == cname) {
-            // console.log("Found "+data[1]);
-            return data[1];
+        for(var k = 0; k < ca.length; k++) {
+            var data = ca[k].split('=');
+            if (data[0].trim() == cname) {
+                // console.log("Found "+data[1]);
+                return data[1];
+            }
         }
+    }
+    catch (err) {
+        console.log("getCookie pb decoding URI " + err);
     }
 
     return null;
