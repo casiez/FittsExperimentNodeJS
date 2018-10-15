@@ -19,4 +19,4 @@ CREATE TABLE `results` (
 
 
 ## Run the server
-Run the server using the command 
+Run the server using the command ```node server.js```
