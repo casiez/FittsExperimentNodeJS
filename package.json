@@ -10,9 +10,9 @@
   "author": "Gery Casiez",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3",
+    "express": "^4.18.2",
     "fs": "0.0.1-security",
-    "mysql": "^2.16.0",
-    "socket.io": "^2.1.1"
+    "mysql": "^2.18.1",
+    "socket.io": "^4.5.3"
   }
 }
